@@ -1,0 +1,21 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Timer {
+  id: Int!
+  name: String!
+}
+
+type Query {
+  getTimer(id: Int!): Timer!
+  timers: [Timer!]!
+}
+
+type Mutation {
+  createTimer(createTimerInput: CreateTimerInput!): Timer!
+}
+
+input CreateTimerInput {
+  name: String!
+}
