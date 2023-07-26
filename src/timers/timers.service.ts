@@ -17,7 +17,11 @@ export class TimersService {
     return this.timersRepository.save(newTimer);
   }
 
-  async findAll(): Promise<Timer[]> {
+  findAll(): Promise<Timer[]> {
     return this.timersRepository.find();
+  }
+
+  findOne(id: number): Promise<Timer> {
+    return this.timersRepository.findOneOrFail({ where: { id } });
   }
 }

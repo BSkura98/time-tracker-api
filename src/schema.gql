@@ -8,6 +8,7 @@ type Timer {
 }
 
 type Query {
+  getTimer(id: Int!): Timer!
   timers: [Timer!]!
 }
 
