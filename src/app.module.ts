@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TimersModule } from './timers/timers.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TimerEntriesModule } from './timer-entries/timer-entries.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
     }),
     TimersModule,
+    TimerEntriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

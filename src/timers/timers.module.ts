@@ -6,7 +6,8 @@ import { TimersResolver } from './timers.resolver';
 import { Timer } from './timer.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Timer])],
+  imports: [TypeOrmModule.forFeature([Timer]), TimersModule],
   providers: [TimersService, TimersResolver],
+  exports: [TimersService],
 })
 export class TimersModule {}
