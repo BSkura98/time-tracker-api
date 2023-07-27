@@ -2,20 +2,52 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type TimerEntry {
+  id: Int!
+  startTime: DateTime!
+  endTime: DateTime!
+  timerId: Int!
+  timer: Timer!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Timer {
   id: Int!
   name: String!
+  entries: [TimerEntry!]
 }
 
 type Query {
   getTimer(id: Int!): Timer!
   timers: [Timer!]!
+  timerEntries: [TimerEntry!]!
+  timerEntry(id: Int!): TimerEntry!
 }
 
 type Mutation {
   createTimer(createTimerInput: CreateTimerInput!): Timer!
+  createTimerEntry(createTimerEntryInput: CreateTimerEntryInput!): TimerEntry!
+  updateTimerEntry(updateTimerEntryInput: UpdateTimerEntryInput!): TimerEntry!
+  removeTimerEntry(id: Int!): TimerEntry!
 }
 
 input CreateTimerInput {
   name: String!
+}
+
+input CreateTimerEntryInput {
+  startTime: DateTime!
+  endTime: DateTime!
+  timerId: Int!
+}
+
+input UpdateTimerEntryInput {
+  startTime: DateTime
+  endTime: DateTime
+  timerId: Int
+  id: Int!
 }
