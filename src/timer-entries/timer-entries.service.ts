@@ -20,7 +20,6 @@ export class TimerEntriesService {
     const newTimerEntry = this.timerEntriesRepository.create(
       createTimerEntryInput,
     );
-    console.log(newTimerEntry);
 
     return this.timerEntriesRepository.save(newTimerEntry);
   }

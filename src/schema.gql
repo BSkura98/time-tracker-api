@@ -30,6 +30,8 @@ type Query {
 
 type Mutation {
   createTimer(createTimerInput: CreateTimerInput!): Timer!
+  updateTimer(updateTimerInput: UpdateTimerInput!): Timer!
+  removeTimer(id: Int!): Timer!
   createTimerEntry(createTimerEntryInput: CreateTimerEntryInput!): TimerEntry!
   updateTimerEntry(updateTimerEntryInput: UpdateTimerEntryInput!): TimerEntry!
   removeTimerEntry(id: Int!): TimerEntry!
@@ -37,6 +39,11 @@ type Mutation {
 
 input CreateTimerInput {
   name: String!
+}
+
+input UpdateTimerInput {
+  name: String
+  id: Int!
 }
 
 input CreateTimerEntryInput {

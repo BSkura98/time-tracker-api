@@ -3,6 +3,7 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TimersService } from './timers.service';
 import { Timer } from './timer.entity';
 import { CreateTimerInput } from './dto/create-timer.input';
+import { UpdateTimerInput } from './dto/update-timer.input';
 
 @Resolver((of) => Timer)
 export class TimersResolver {
@@ -23,5 +24,20 @@ export class TimersResolver {
     @Args('createTimerInput') createTimerInput: CreateTimerInput,
   ): Promise<Timer> {
     return this.timersService.createTimer(createTimerInput);
+  }
+
+  @Mutation((returns) => Timer)
+  updateTimer(
+    @Args('updateTimerInput') updateTimerInput: UpdateTimerInput,
+  ) {
+    return this.timersService.update(
+      updateTimerInput.id,
+      updateTimerInput,
+    );
+  }
+
+  @Mutation((returns) => Timer)
+  removeTimer(@Args('id', { type: () => Int }) id: number) {
+    return this.timersService.remove(id);
   }
 }
