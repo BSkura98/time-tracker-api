@@ -41,9 +41,7 @@ export class TimersService {
     const timer = await this.timersRepository.findOneOrFail({ where: { id } });
 
     // timer.entries.forEach((entry) => this.timerEntriesService.remove(entry.id));
-    console.log(timer);
     await this.timersRepository.remove(timer);
-    console.log(timer);
 
     return timer;
   }

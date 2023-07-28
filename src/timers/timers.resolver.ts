@@ -28,11 +28,11 @@ export class TimersResolver {
 
   @Mutation((returns) => Timer)
   updateTimer(
-    @Args('updateTimerInput') updateTimerEntryInput: UpdateTimerInput,
+    @Args('updateTimerInput') updateTimerInput: UpdateTimerInput,
   ) {
     return this.timersService.update(
-      updateTimerEntryInput.id,
-      updateTimerEntryInput,
+      updateTimerInput.id,
+      updateTimerInput,
     );
   }
 
