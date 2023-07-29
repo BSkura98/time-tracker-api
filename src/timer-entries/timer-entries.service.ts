@@ -36,8 +36,17 @@ export class TimerEntriesService {
     return this.timersService.findOne(timerId);
   }
 
-  update(id: number, updateTimerEntryInput: UpdateTimerEntryInput) {
-    return `This action updates a #${id} timerEntry`;
+  async update(
+    id: number,
+    updateTimerEntryInput: UpdateTimerEntryInput,
+  ): Promise<TimerEntry> {
+    await this.timerEntriesRepository
+      .createQueryBuilder('timerEntry')
+      .update(TimerEntry)
+      .set(updateTimerEntryInput)
+      .where('id = :id', { id })
+      .execute();
+    return this.timerEntriesRepository.findOneOrFail({ where: { id } });
   }
 
   remove(id: number) {
