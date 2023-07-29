@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 
+import { TimerEntry } from 'src/timer-entries/entities/timer-entry.entity';
+import { TimerEntriesService } from 'src/timer-entries/timer-entries.service';
 import { Timer } from './timer.entity';
 import { CreateTimerInput } from './dto/create-timer.input';
 import { UpdateTimerInput } from './dto/update-timer.input';
@@ -10,6 +12,8 @@ import { UpdateTimerInput } from './dto/update-timer.input';
 export class TimersService {
   constructor(
     @InjectRepository(Timer) private timersRepository: Repository<Timer>,
+    @Inject(forwardRef(() => TimerEntriesService))
+    private timerEntriesService: TimerEntriesService,
   ) {}
 
   createTimer(createTimerInput: CreateTimerInput): Promise<Timer> {
@@ -26,6 +30,10 @@ export class TimersService {
     return this.timersRepository.findOneOrFail({ where: { id } });
   }
 
+  async getTimerEntries(timerId: number): Promise<TimerEntry[]> {
+    return this.timerEntriesService.findAll({ where: { timerId } });
+  }
+
   async update(id: number, updateTimerInput: UpdateTimerInput): Promise<Timer> {
     await this.timersRepository
       .createQueryBuilder('timer')
@@ -36,11 +44,10 @@ export class TimersService {
     return this.timersRepository.findOneOrFail({ where: { id } });
   }
 
-  // TODO Remove also timer entries
   async remove(id: number): Promise<Timer> {
     const timer = await this.timersRepository.findOneOrFail({ where: { id } });
 
-    // timer.entries.forEach((entry) => this.timerEntriesService.remove(entry.id));
+    await this.timerEntriesService.removeAllForTimer(id);
     await this.timersRepository.remove(timer);
 
     return timer;

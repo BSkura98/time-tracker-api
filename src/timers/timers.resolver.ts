@@ -1,5 +1,14 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 
+import { TimerEntry } from 'src/timer-entries/entities/timer-entry.entity';
 import { TimersService } from './timers.service';
 import { Timer } from './timer.entity';
 import { CreateTimerInput } from './dto/create-timer.input';
@@ -9,14 +18,20 @@ import { UpdateTimerInput } from './dto/update-timer.input';
 export class TimersResolver {
   constructor(private timersService: TimersService) {}
 
-  @Query((returns) => Timer)
-  getTimer(@Args('id', { type: () => Int }) id: number): Promise<Timer> {
+  @Query((returns) => Timer, { name: 'timer' })
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Timer> {
     return this.timersService.findOne(id);
   }
 
-  @Query((returns) => [Timer])
-  timers(): Promise<Timer[]> {
+  @Query((returns) => [Timer], { name: 'timers' })
+  findAll(): Promise<Timer[]> {
     return this.timersService.findAll();
+  }
+
+  @ResolveField((returns) => [TimerEntry])
+  entries(@Parent() timer: Timer): Promise<TimerEntry[]> {
+    console.log(timer);
+    return this.timersService.getTimerEntries(timer.id);
   }
 
   @Mutation((returns) => Timer)
@@ -27,13 +42,8 @@ export class TimersResolver {
   }
 
   @Mutation((returns) => Timer)
-  updateTimer(
-    @Args('updateTimerInput') updateTimerInput: UpdateTimerInput,
-  ) {
-    return this.timersService.update(
-      updateTimerInput.id,
-      updateTimerInput,
-    );
+  updateTimer(@Args('updateTimerInput') updateTimerInput: UpdateTimerInput) {
+    return this.timersService.update(updateTimerInput.id, updateTimerInput);
   }
 
   @Mutation((returns) => Timer)

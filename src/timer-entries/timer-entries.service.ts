@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 import { TimersService } from 'src/timers/timers.service';
 import { Timer } from 'src/timers/timer.entity';
@@ -13,6 +13,7 @@ export class TimerEntriesService {
   constructor(
     @InjectRepository(TimerEntry)
     private timerEntriesRepository: Repository<TimerEntry>,
+    @Inject(forwardRef(() => TimersService))
     private timersService: TimersService,
   ) {}
 
@@ -24,7 +25,7 @@ export class TimerEntriesService {
     return this.timerEntriesRepository.save(newTimerEntry);
   }
 
-  findAll() {
+  findAll(options?: FindManyOptions<TimerEntry>) {
     return this.timerEntriesRepository.find();
   }
 
@@ -36,11 +37,38 @@ export class TimerEntriesService {
     return this.timersService.findOne(timerId);
   }
 
-  update(id: number, updateTimerEntryInput: UpdateTimerEntryInput) {
-    return `This action updates a #${id} timerEntry`;
+  async update(
+    id: number,
+    updateTimerEntryInput: UpdateTimerEntryInput,
+  ): Promise<TimerEntry> {
+    await this.timerEntriesRepository
+      .createQueryBuilder('timerEntry')
+      .update(TimerEntry)
+      .set(updateTimerEntryInput)
+      .where('id = :id', { id })
+      .execute();
+    return this.timerEntriesRepository.findOneOrFail({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} timerEntry`;
+  async remove(id: number): Promise<TimerEntry> {
+    const timerEntry = await this.timerEntriesRepository.findOneOrFail({
+      where: { id },
+    });
+
+    await this.timerEntriesRepository.remove(timerEntry);
+
+    return timerEntry;
+  }
+
+  async removeAllForTimer(timerId: number): Promise<TimerEntry[]> {
+    const entries = await this.timerEntriesRepository.find({
+      where: { timerId },
+    });
+
+    for (let entry of entries) {
+      await this.timerEntriesRepository.remove(entry);
+    }
+
+    return entries;
   }
 }
