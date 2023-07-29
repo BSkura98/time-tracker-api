@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 
+import { TimerEntriesService } from 'src/timer-entries/timer-entries.service';
 import { Timer } from './timer.entity';
 import { CreateTimerInput } from './dto/create-timer.input';
 import { UpdateTimerInput } from './dto/update-timer.input';
@@ -10,6 +11,8 @@ import { UpdateTimerInput } from './dto/update-timer.input';
 export class TimersService {
   constructor(
     @InjectRepository(Timer) private timersRepository: Repository<Timer>,
+    @Inject(forwardRef(() => TimerEntriesService))
+    private timerEntriesService: TimerEntriesService,
   ) {}
 
   createTimer(createTimerInput: CreateTimerInput): Promise<Timer> {
@@ -40,6 +43,7 @@ export class TimersService {
   async remove(id: number): Promise<Timer> {
     const timer = await this.timersRepository.findOneOrFail({ where: { id } });
 
+    // console.log(timer);
     // timer.entries.forEach((entry) => this.timerEntriesService.remove(entry.id));
     await this.timersRepository.remove(timer);
 

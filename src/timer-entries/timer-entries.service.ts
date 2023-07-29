@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -13,6 +13,7 @@ export class TimerEntriesService {
   constructor(
     @InjectRepository(TimerEntry)
     private timerEntriesRepository: Repository<TimerEntry>,
+    @Inject(forwardRef(() => TimersService))
     private timersService: TimersService,
   ) {}
 
