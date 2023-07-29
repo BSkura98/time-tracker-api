@@ -59,4 +59,16 @@ export class TimerEntriesService {
 
     return timerEntry;
   }
+
+  async removeAllForTimer(timerId: number): Promise<TimerEntry[]> {
+    const entries = await this.timerEntriesRepository.find({
+      where: { timerId },
+    });
+
+    for (let entry of entries) {
+      await this.timerEntriesRepository.remove(entry);
+    }
+
+    return entries;
+  }
 }

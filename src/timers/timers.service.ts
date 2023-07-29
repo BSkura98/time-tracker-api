@@ -44,12 +44,10 @@ export class TimersService {
     return this.timersRepository.findOneOrFail({ where: { id } });
   }
 
-  // TODO Remove also timer entries
   async remove(id: number): Promise<Timer> {
     const timer = await this.timersRepository.findOneOrFail({ where: { id } });
 
-    // console.log(timer);
-    // timer.entries.forEach((entry) => this.timerEntriesService.remove(entry.id));
+    await this.timerEntriesService.removeAllForTimer(id);
     await this.timersRepository.remove(timer);
 
     return timer;
