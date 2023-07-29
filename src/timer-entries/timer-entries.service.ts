@@ -49,7 +49,13 @@ export class TimerEntriesService {
     return this.timerEntriesRepository.findOneOrFail({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} timerEntry`;
+  async remove(id: number): Promise<TimerEntry> {
+    const timerEntry = await this.timerEntriesRepository.findOneOrFail({
+      where: { id },
+    });
+
+    await this.timerEntriesRepository.remove(timerEntry);
+
+    return timerEntry;
   }
 }
