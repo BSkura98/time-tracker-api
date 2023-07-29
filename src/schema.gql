@@ -22,7 +22,7 @@ type Timer {
 }
 
 type Query {
-  getTimer(id: Int!): Timer!
+  timer(id: Int!): Timer!
   timers: [Timer!]!
   timerEntries: [TimerEntry!]!
   timerEntry(id: Int!): TimerEntry!

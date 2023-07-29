@@ -1,6 +1,6 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 import { TimersService } from 'src/timers/timers.service';
 import { Timer } from 'src/timers/timer.entity';
@@ -25,7 +25,7 @@ export class TimerEntriesService {
     return this.timerEntriesRepository.save(newTimerEntry);
   }
 
-  findAll() {
+  findAll(options?: FindManyOptions<TimerEntry>) {
     return this.timerEntriesRepository.find();
   }
 
