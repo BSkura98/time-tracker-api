@@ -14,11 +14,8 @@ The repository for the client app can be found [here](https://github.com/BSkura9
 
 ## Current features
 
-* Create and get timers (without entries)
-* Timer entries (with start time and end time)
-
-To do list:
-* Editing and deleting timers
+* CRUD operations on timers
+* CRUD operations on timer entries (with start time and end time)
 
 ## Status
 
