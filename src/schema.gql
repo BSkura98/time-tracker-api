@@ -53,12 +53,14 @@ input UpdateTimerInput {
 input CreateTimerEntryInput {
   startTime: DateTime!
   endTime: DateTime!
-  timerId: Int!
+  timerId: Int
+  timerName: String
 }
 
 input UpdateTimerEntryInput {
   startTime: DateTime
   endTime: DateTime
   timerId: Int
+  timerName: String
   id: Int!
 }

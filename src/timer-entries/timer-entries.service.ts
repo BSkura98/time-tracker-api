@@ -1,4 +1,10 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 
@@ -17,10 +23,31 @@ export class TimerEntriesService {
     private timersService: TimersService,
   ) {}
 
-  create(createTimerEntryInput: CreateTimerEntryInput) {
-    const newTimerEntry = this.timerEntriesRepository.create(
-      createTimerEntryInput,
-    );
+  async create(createTimerEntryInput: CreateTimerEntryInput) {
+    const { timerName } = createTimerEntryInput;
+    let timerId = createTimerEntryInput.timerId;
+
+    if (!timerId && !timerName) {
+      throw new HttpException(
+        'No timer information provided',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (!timerId) {
+      let timer;
+      try {
+        timer = await this.timersService.findOneByName(timerName);
+      } catch {
+        timer = await this.timersService.createTimer({ name: timerName });
+      }
+      timerId = timer.id;
+    }
+
+    const newTimerEntry = this.timerEntriesRepository.create({
+      ...createTimerEntryInput,
+      timerId,
+    });
 
     return this.timerEntriesRepository.save(newTimerEntry);
   }
