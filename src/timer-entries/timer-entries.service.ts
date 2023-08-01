@@ -26,7 +26,7 @@ export class TimerEntriesService {
   }
 
   findAll(options?: FindManyOptions<TimerEntry>) {
-    return this.timerEntriesRepository.find();
+    return this.timerEntriesRepository.find(options);
   }
 
   findOne(id: number) {
