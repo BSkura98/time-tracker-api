@@ -8,6 +8,7 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 import { Between, FindManyOptions } from 'typeorm';
+import { endOfDay, startOfDay } from 'date-fns';
 
 import { Timer } from 'src/timers/timer.entity';
 import { TimerEntriesService } from './timer-entries.service';
@@ -15,7 +16,6 @@ import { TimerEntry } from './entities/timer-entry.entity';
 import { CreateTimerEntryInput } from './dto/create-timer-entry.input';
 import { UpdateTimerEntryInput } from './dto/update-timer-entry.input';
 import { FilterTimerEntryInput } from './dto/filter-timer-entry.input';
-import { endOfDay, startOfDay } from 'date-fns';
 
 @Resolver((of) => TimerEntry)
 export class TimerEntriesResolver {
