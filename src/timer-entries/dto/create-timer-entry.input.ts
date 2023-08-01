@@ -11,6 +11,9 @@ export class CreateTimerEntryInput {
   @Field()
   endTime: Date;
 
-  @Field((type) => Int)
-  timerId: number;
+  @Field((type) => Int, { nullable: true })
+  timerId?: number;
+
+  @Field({ nullable: true })
+  timerName?: string;
 }

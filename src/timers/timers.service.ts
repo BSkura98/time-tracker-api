@@ -30,6 +30,10 @@ export class TimersService {
     return this.timersRepository.findOneOrFail({ where: { id } });
   }
 
+  findOneByName(name: string): Promise<Timer> {
+    return this.timersRepository.findOneOrFail({ where: { name } });
+  }
+
   async getTimerEntries(timerId: number): Promise<TimerEntry[]> {
     return this.timerEntriesService.findAll({ where: { timerId } });
   }
