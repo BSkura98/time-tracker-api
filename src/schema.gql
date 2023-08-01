@@ -24,8 +24,12 @@ type Timer {
 type Query {
   timer(id: Int!): Timer!
   timers: [Timer!]!
-  timerEntries: [TimerEntry!]!
+  timerEntries(filterTimerEntryInput: FilterTimerEntryInput): [TimerEntry!]!
   timerEntry(id: Int!): TimerEntry!
+}
+
+input FilterTimerEntryInput {
+  startTimeDay: DateTime
 }
 
 type Mutation {
