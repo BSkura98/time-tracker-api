@@ -26,7 +26,7 @@ import { TimerEntriesModule } from './timer-entries/timer-entries.module';
       database: process.env.POSTGRES_DATABASE,
       entities: ['dist/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
     TimersModule,
     TimerEntriesModule,
