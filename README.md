@@ -10,7 +10,7 @@ The repository for the client app can be found [here](https://github.com/BSkura9
 * NestJS
 * GraphQL
 * TypeORM
-* SQLite
+* PostgreSQL
 
 ## Current features
 
