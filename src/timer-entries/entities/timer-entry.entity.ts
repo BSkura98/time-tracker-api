@@ -14,8 +14,8 @@ export class TimerEntry {
   startTime: Date;
 
   @Column()
-  @Field()
-  endTime: Date;
+  @Field({ nullable: true })
+  endTime?: Date;
 
   @Column()
   @Field((type) => Int)
