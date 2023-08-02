@@ -5,7 +5,7 @@
 type TimerEntry {
   id: Int!
   startTime: DateTime!
-  endTime: DateTime!
+  endTime: DateTime
   timerId: Int!
   timer: Timer!
 }
@@ -52,7 +52,7 @@ input UpdateTimerInput {
 
 input CreateTimerEntryInput {
   startTime: DateTime!
-  endTime: DateTime!
+  endTime: DateTime
   timerId: Int
   timerName: String
 }

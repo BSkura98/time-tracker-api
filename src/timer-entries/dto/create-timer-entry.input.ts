@@ -1,5 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsDate } from 'class-validator';
+import { IsDate, IsOptional } from 'class-validator';
 
 @InputType()
 export class CreateTimerEntryInput {
@@ -7,9 +7,10 @@ export class CreateTimerEntryInput {
   @Field()
   startTime: Date;
 
+  @IsOptional()
   @IsDate()
-  @Field()
-  endTime: Date;
+  @Field({ nullable: true })
+  endTime?: Date;
 
   @Field((type) => Int, { nullable: true })
   timerId?: number;
