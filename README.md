@@ -11,11 +11,7 @@ The repository for the client app can be found [here](https://github.com/BSkura9
 * GraphQL
 * TypeORM
 * PostgreSQL
-
-## Current features
-
-* CRUD operations on timers
-* CRUD operations on timer entries (with start time and end time)
+* Docker
 
 ## Status
 
