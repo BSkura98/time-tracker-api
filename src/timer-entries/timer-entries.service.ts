@@ -35,12 +35,7 @@ export class TimerEntriesService {
     }
 
     if (!timerId) {
-      let timer;
-      try {
-        timer = await this.timersService.findOneByName(timerName);
-      } catch {
-        timer = await this.timersService.createTimer({ name: timerName });
-      }
+      let timer = await this.timersService.findOrCreateOne(timerName);
       timerId = timer.id;
     }
 
@@ -68,10 +63,21 @@ export class TimerEntriesService {
     id: number,
     updateTimerEntryInput: UpdateTimerEntryInput,
   ): Promise<TimerEntry> {
+    let { timerName, ...timerEntryInput } = updateTimerEntryInput;
+    let timerId;
+    if (timerName) {
+      let timer = await this.timersService.findOrCreateOne(timerName);
+      timerId = timer.id;
+    }
+
+    if (timerId) {
+      timerEntryInput = { ...timerEntryInput, timerId };
+    }
+
     await this.timerEntriesRepository
       .createQueryBuilder('timerEntry')
       .update(TimerEntry)
-      .set(updateTimerEntryInput)
+      .set({ ...timerEntryInput, timerId })
       .where('id = :id', { id })
       .execute();
     return this.timerEntriesRepository.findOneOrFail({ where: { id } });
