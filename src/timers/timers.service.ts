@@ -34,6 +34,16 @@ export class TimersService {
     return this.timersRepository.findOneOrFail({ where: { name } });
   }
 
+  async findOrCreateOne(name: string): Promise<Timer> {
+    let timer;
+    try {
+      timer = await this.findOneByName(name);
+    } catch {
+      timer = await this.createTimer({ name });
+    }
+    return timer;
+  }
+
   async getTimerEntries(timerId: number): Promise<TimerEntry[]> {
     return this.timerEntriesService.findAll({ where: { timerId } });
   }
