@@ -12,7 +12,3 @@ The repository for the client app can be found [here](https://github.com/BSkura9
 * TypeORM
 * PostgreSQL
 * Docker
-
-## Status
-
-Project is _in progress_
