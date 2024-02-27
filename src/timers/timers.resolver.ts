@@ -8,7 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
-import { TimerEntry } from 'src/timer-entries/entities/timer-entry.entity';
+import { TimerEntry } from '../timer-entries/entities/timer-entry.entity';
 import { TimersService } from './timers.service';
 import { Timer } from './timer.entity';
 import { CreateTimerInput } from './dto/create-timer.input';

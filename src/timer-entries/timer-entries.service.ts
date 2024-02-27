@@ -8,8 +8,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 
-import { TimersService } from 'src/timers/timers.service';
 import { Timer } from 'src/timers/timer.entity';
+
+import { TimersService } from '../timers/timers.service';
 import { CreateTimerEntryInput } from './dto/create-timer-entry.input';
 import { UpdateTimerEntryInput } from './dto/update-timer-entry.input';
 import { TimerEntry } from './entities/timer-entry.entity';

@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { TimerEntry } from 'src/timer-entries/entities/timer-entry.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+import { TimerEntry } from '../timer-entries/entities/timer-entry.entity';
 
 @Entity()
 @ObjectType()
