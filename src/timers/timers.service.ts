@@ -1,9 +1,9 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import { TimerEntry } from 'src/timer-entries/entities/timer-entry.entity';
-import { TimerEntriesService } from 'src/timer-entries/timer-entries.service';
+
+import { TimerEntriesService } from '../timer-entries/timer-entries.service';
 import { Timer } from './timer.entity';
 import { CreateTimerInput } from './dto/create-timer.input';
 import { UpdateTimerInput } from './dto/update-timer.input';
