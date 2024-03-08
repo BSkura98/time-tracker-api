@@ -33,18 +33,12 @@ describe('TimersResolver', () => {
       ...dto,
     })),
     findAll: jest.fn(() => timers),
-    findOne: jest.fn((id) => ({
-      id,
-      name: timers.find((timer) => timer.id === id).name,
-    })),
+    findOne: jest.fn((id) => timers.find((timer) => timer.id === id)),
     update: jest.fn((id, dto) => ({
       id,
       ...dto,
     })),
-    remove: jest.fn((id) => ({
-      id,
-      name: timers.find((timer) => timer.id === id).name,
-    })),
+    remove: jest.fn((id) => timers.find((timer) => timer.id === id)),
   };
 
   beforeEach(async () => {
@@ -97,7 +91,7 @@ describe('TimersResolver', () => {
 
   it('should remove a timer', () => {
     const timer = getRandomElement(timers);
-    console.log(timers);
+
     expect(resolver.removeTimer(timer.id)).toEqual(timer);
 
     expect(mockTimersService.remove).toHaveBeenCalledWith(timer.id);
