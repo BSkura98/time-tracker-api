@@ -34,7 +34,6 @@ describe('TimerEntriesResolver', () => {
     findOne: jest.fn((id) =>
       timerEntries.find((timerEntry) => timerEntry.id === id),
     ),
-    // getTimer: jest.fn(id => ),
     update: jest.fn((id, dto) => ({ id, ...dto })),
     remove: jest.fn((id) =>
       timerEntries.find((timerEntry) => timerEntry.id === id),
